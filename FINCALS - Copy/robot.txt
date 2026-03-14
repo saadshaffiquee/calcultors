@@ -1,0 +1,22 @@
+# ==================================================
+# robots.txt — yourdomain.com
+# Last updated: 2026-03-14
+# ==================================================
+
+# Allow all well-behaved crawlers full access
+User-agent: *
+Allow: /
+
+# Block access to any utility or config files
+Disallow: /404.html
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Allow Google to crawl the sitemap directly
+Allow: /sitemap.xml
+
+# ==================================================
+# Sitemap location — auto-discovered by Google,
+# Bing, and other major search engines
+# ==================================================
+Sitemap: https://fincalcuhub.netlify.app/sitemap.xml
