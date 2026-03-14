@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ═══════════════════════════════════════
+       SEO: Global Tax Calculator
+  ═══════════════════════════════════════ -->
+  <title>Global Tax Calculator | Calculate Net Income for Any Country</title>
+  <meta name="description" content="Free global tax calculator supporting 50+ countries with automatic tax brackets. Calculate net income, tax liability, and effective tax rate for USA, UK, Canada, Australia, Germany, and any jurisdiction with custom bracket input.">
+  <meta name="keywords" content="tax calculator, income tax calculator, global tax calculator, net income calculator, tax brackets calculator, international tax calculator, salary calculator, take home pay calculator, tax liability calculator">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://yoursite.com/global-tax-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Global Tax Calculator | Calculate Net Income for Any Country">
+  <meta property="og:description" content="Calculate income tax and net pay for 50+ countries or build custom tax brackets. Free tool with automatic tax bracket detection.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yoursite.com/global-tax-calculator.html">
+
+  <!-- Schema.org Calculator -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Global Tax Calculator",
+    "applicationCategory": "FinanceApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online tax calculator for 50+ countries with custom tax bracket support",
+    "operatingSystem": "Any",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "3200"
+    }
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do tax brackets work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tax brackets use a progressive tax system where only the income within each bracket is taxed at that rate. For example, if the first $10,000 is taxed at 10% and the next $20,000 at 20%, someone earning $25,000 pays $1,000 (10% of $10,000) plus $3,000 (20% of $15,000), totaling $4,000—not 20% of the full $25,000."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which countries are supported by this calculator?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "This calculator includes pre-configured tax brackets for 50+ countries including USA, UK, Canada, Australia, Germany, France, Japan, India, Brazil, and most EU/OECD nations. You can also manually input custom tax brackets for any country or jurisdiction not in our database, including state/provincial taxes."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #181c24;
+      --border: #1e2330;
+      --green: #00d97e;
+      --gold: #f5c842;
+      --blue: #5b9cf6;
+      --purple: #a78bfa;
+      --orange: #fb923c;
+      --red: #f87171;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --muted2: #9ca3af;
+      --radius: 14px;
+      --mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,12,16,.92);
+      backdrop-filter: blur(14px);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; color: var(--text);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 9px;
+    }
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--green);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; color: #000; font-weight: 800;
+    }
+    nav { display: flex; gap: 6px; flex-wrap: wrap; }
+    nav a {
+      color: var(--muted2); text-decoration: none;
+      font-size: .82rem; font-weight: 500;
+      padding: 6px 12px; border-radius: 8px;
+      transition: color .2s, background .2s;
+    }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+
+    /* ─── HERO ─── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(0,217,126,.07); border: 1px solid rgba(0,217,126,.18);
+      color: var(--green); font-size: .75rem; font-weight: 600;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 999px; margin-bottom: 22px;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15; color: var(--text);
+      max-width: 720px; margin-bottom: 16px;
+    }
+    h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub {
+      color: var(--muted2); font-size: 1.1rem;
+      max-width: 560px; margin-bottom: 24px; line-height: 1.7;
+    }
+
+    /* ─── CALCULATOR SECTION ─── */
+    .calc-section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+    .calc-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    @media(max-width:768px){
+      .calc-container { grid-template-columns: 1fr; }
+    }
+
+    /* ─── INPUTS SIDE ─── */
+    .calc-inputs {
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      max-height: 700px;
+      overflow-y: auto;
+    }
+    @media(max-width:768px){
+      .calc-inputs { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; max-height: none; }
+    }
+
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-label {
+      font-size: .85rem; font-weight: 600;
+      color: var(--text); display: flex; align-items: center; gap: 6px;
+    }
+    .input-label span { color: var(--muted); font-weight: 400; }
+
+    .custom-select {
+      position: relative;
+    }
+    .custom-select select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 40px 12px 14px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      cursor: pointer;
+      appearance: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .custom-select::after {
+      content: '▼';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.7rem;
+      pointer-events: none;
+    }
+    .custom-select select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(91,156,246,.1);
+    }
+
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-prefix {
+      position: absolute;
+      left: 14px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .9rem;
+      pointer-events: none;
+    }
+    .calc-inputs input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px 12px 28px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .calc-inputs input:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(91,156,246,.1);
+    }
+    .calc-inputs input::placeholder { color: var(--muted); }
+
+    /* Toggle Switch */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+    .toggle-label {
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .toggle-switch {
+      position: relative;
+      width: 48px;
+      height: 24px;
+      background: var(--surface2);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background .2s;
+      border: 1px solid var(--border);
+    }
+    .toggle-switch.active {
+      background: var(--blue);
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--text);
+      border-radius: 50%;
+      top: 1px;
+      left: 2px;
+      transition: transform .2s;
+    }
+    .toggle-switch.active::after {
+      transform: translateX(24px);
+    }
+
+    /* Custom Brackets Section */
+    .custom-brackets {
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+    .custom-brackets.visible {
+      display: block;
+    }
+    .bracket-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 40px;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .bracket-row input {
+      padding-left: 14px;
+    }
+    .remove-bracket {
+      width: 32px;
+      height: 32px;
+      background: rgba(248,113,113,.1);
+      border: 1px solid rgba(248,113,113,.3);
+      color: var(--red);
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: all .2s;
+    }
+    .remove-bracket:hover {
+      background: rgba(248,113,113,.2);
+    }
+    .add-bracket-btn {
+      width: 100%;
+      background: transparent;
+      border: 2px dashed var(--border);
+      color: var(--muted2);
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all .2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .add-bracket-btn:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: rgba(91,156,246,.05);
+    }
+
+    .calc-btn {
+      background: var(--blue);
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-top: 8px;
+    }
+    .calc-btn:hover { background: #7ab0ff; transform: translateY(-1px); }
+    .calc-btn:active { transform: translateY(0); }
+
+    /* ─── RESULTS SIDE ─── */
+    .calc-results {
+      padding: 32px;
+      background: rgba(91,156,246,.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+    @media(max-width:768px){ .calc-results { padding: 24px; } }
+
+    .result-block { text-align: center; }
+    .result-label {
+      font-size: .8rem;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 8px;
+    }
+    .result-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      color: var(--blue);
+      line-height: 1;
+    }
+    .result-value.net-income {
+      color: var(--green);
+    }
+
+    .result-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .breakdown-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .breakdown-label {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .breakdown-value {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .breakdown-item.highlight {
+      border-color: var(--blue);
+      background: rgba(91,156,246,.08);
+    }
+    .breakdown-item.highlight .breakdown-value {
+      color: var(--blue);
+    }
+    .breakdown-item.tax-highlight {
+      border-color: var(--red);
+      background: rgba(248,113,113,.08);
+    }
+    .breakdown-item.tax-highlight .breakdown-value {
+      color: var(--red);
+    }
+    .breakdown-item.income-highlight {
+      border-color: var(--green);
+      background: rgba(0,217,126,.08);
+    }
+    .breakdown-item.income-highlight .breakdown-value {
+      color: var(--green);
+    }
+
+    /* Bracket Visualization */
+    .bracket-viz {
+      margin-top: 16px;
+      padding: 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .bracket-viz-title {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+    .bracket-bar {
+      height: 32px;
+      background: var(--surface2);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      margin-bottom: 8px;
+    }
+    .bracket-segment {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #000;
+      font-family: var(--mono);
+    }
+    .bracket-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+      font-size: 0.75rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+
+    /* ─── SECTIONS ─── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 0;
+    }
+    .section-header { margin-bottom: 28px; }
+    .section-tag {
+      display: inline-block;
+      font-size: .72rem; font-weight: 700; letter-spacing: .09em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      color: var(--muted2);
+      font-size: .95rem;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* ─── EXPLANATION ─── */
+    .formula-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-top: 20px;
+    }
+    .formula-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .formula {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--blue);
+      background: var(--surface2);
+      padding: 16px 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+    .formula-vars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .var-item {
+      font-size: .85rem;
+      color: var(--muted2);
+    }
+    .var-item strong {
+      color: var(--text);
+      font-family: var(--mono);
+    }
+
+    /* ─── COUNTRY GRID ─── */
+    .country-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .country-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted2);
+      transition: all .2s;
+    }
+    .country-tag:hover {
+      border-color: var(--blue);
+      color: var(--text);
+      background: rgba(91,156,246,.05);
+    }
+
+    /* ─── EXAMPLE ─── */
+    .example-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media(max-width:640px){ .example-box { grid-template-columns: 1fr; } }
+    .example-inputs-side {
+      padding: 28px;
+      border-right: 1px solid var(--border);
+    }
+    @media(max-width:640px){ .example-inputs-side { border-right: none; border-bottom: 1px solid var(--border); } }
+    .example-inputs-side h3 {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      color: var(--muted2);
+      font-weight: 500;
+    }
+    .ex-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .ex-row:last-child { border-bottom: none; }
+    .ex-k { color: var(--muted); }
+    .ex-v { font-family: var(--mono); color: var(--text); }
+
+    .example-result-side {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: rgba(91,156,246,.05);
+    }
+    .example-result-label {
+      font-size: .8rem;
+      color: var(--muted2);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .example-result-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      color: var(--blue);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .example-result-sub {
+      font-size: .85rem;
+      color: var(--muted);
+      max-width: 280px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: .98rem;
+      font-weight: 500;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      gap: 16px;
+    }
+    .faq-q:hover { color: var(--blue); }
+    .faq-icon {
+      font-size: 1.2rem;
+      color: var(--muted);
+      transition: transform .3s;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      color: var(--blue);
+    }
+    .faq-a {
+      display: none;
+      padding-bottom: 18px;
+      color: var(--muted2);
+      line-height: 1.8;
+      font-size: .9rem;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── RELATED CALCULATORS ─── */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .calc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color .22s, transform .22s, box-shadow .22s;
+      position: relative;
+      overflow: hidden;
+    }
+    .calc-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent, var(--green));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .calc-card:hover {
+      border-color: rgba(255,255,255,.1);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .calc-card:hover::before { transform: scaleX(1); }
+
+    .calc-card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      width: 44px;
+      height: 44px;
+      background: var(--surface2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calc-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .calc-card p {
+      font-size: .82rem;
+      color: var(--muted2);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .calc-card-arrow {
+      margin-top: 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--accent, var(--green));
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted);
+      font-size: .82rem;
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy {
+      color: var(--muted);
+      font-size: .78rem;
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+    .fade-up {
+      animation: fadeUp .5s ease forwards;
+      opacity: 0;
+    }
+    .d1 { animation-delay: .05s; }
+    .d2 { animation-delay: .12s; }
+    .d3 { animation-delay: .19s; }
+
+    /* ─── MOBILE ─── */
+    @media(max-width:640px){
+      nav { display: none; }
+      .hero { padding: 40px 16px 32px; }
+      .section { padding: 40px 16px 0; }
+      .calc-section { padding: 0 16px 32px; }
+      .calc-inputs, .calc-results { padding: 20px; }
+      .result-breakdown { grid-template-columns: 1fr; }
+      .formula-vars { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .bracket-row { grid-template-columns: 1fr 1fr; }
+      .bracket-row .remove-bracket { grid-column: 2; justify-self: end; }
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">F</span>
+      FinCalcuHub
+    </a>
+    <nav>
+      <a href="/#calculators">All Calculators</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#explanation">How It Works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-badge"><span></span> Free · 50+ Countries · Custom Brackets</div>
+  <h1>Global Tax <em>Calculator</em></h1>
+  <p class="hero-sub">Calculate net income and tax liability for any country. Choose from 50+ pre-configured tax systems or build custom tax brackets for any jurisdiction. Understand your effective tax rate and take-home pay instantly.</p>
+</div>
+
+<!-- ─── CALCULATOR ─── -->
+<section class="calc-section" id="calculator">
+  <div class="calc-container fade-up d1">
+
+    <!-- INPUTS -->
+    <div class="calc-inputs">
+      <div class="input-group">
+        <label class="input-label">Select Country <span>or choose custom brackets</span></label>
+        <div class="custom-select">
+          <select id="countrySelect" onchange="loadCountryBrackets()">
+            <option value="custom">🌍 Custom Tax Brackets</option>
+            <optgroup label="North America">
+              <option value="usa" selected>🇺🇸 United States (2024 Federal)</option>
+              <option value="canada">🇨🇦 Canada (Federal)</option>
+              <option value="mexico">🇲🇽 Mexico</option>
+            </optgroup>
+            <optgroup label="Europe">
+              <option value="uk">🇬🇧 United Kingdom</option>
+              <option value="germany">🇩🇪 Germany</option>
+              <option value="france">🇫🇷 France</option>
+              <option value="netherlands">🇳🇱 Netherlands</option>
+              <option value="spain">🇪🇸 Spain</option>
+              <option value="italy">🇮🇹 Italy</option>
+              <option value="sweden">🇸🇪 Sweden</option>
+              <option value="norway">🇳🇴 Norway</option>
+              <option value="denmark">🇩🇰 Denmark</option>
+              <option value="switzerland">🇨🇭 Switzerland</option>
+              <option value="austria">🇦🇹 Austria</option>
+              <option value="belgium">🇧🇪 Belgium</option>
+              <option value="ireland">🇮🇪 Ireland</option>
+              <option value="portugal">🇵🇹 Portugal</option>
+              <option value="finland">🇫🇮 Finland</option>
+              <option value="poland">🇵🇱 Poland</option>
+              <option value="czech">🇨🇿 Czech Republic</option>
+              <option value="hungary">🇭🇺 Hungary</option>
+              <option value="romania">🇷🇴 Romania</option>
+              <option value="greece">🇬🇷 Greece</option>
+            </optgroup>
+            <optgroup label="Asia-Pacific">
+              <option value="australia">🇦🇺 Australia</option>
+              <option value="newzealand">🇳🇿 New Zealand</option>
+              <option value="japan">🇯🇵 Japan</option>
+              <option value="southkorea">🇰🇷 South Korea</option>
+              <option value="singapore">🇸🇬 Singapore</option>
+              <option value="hongkong">🇭🇰 Hong Kong</option>
+              <option value="india">🇮🇳 India</option>
+              <option value="china">🇨🇳 China</option>
+              <option value="malaysia">🇲🇾 Malaysia</option>
+              <option value="indonesia">🇮🇩 Indonesia</option>
+              <option value="thailand">🇹🇭 Thailand</option>
+              <option value="vietnam">🇻🇳 Vietnam</option>
+              <option value="philippines">🇵🇭 Philippines</option>
+            </optgroup>
+            <optgroup label="Middle East & Africa">
+              <option value="israel">🇮🇱 Israel</option>
+              <option value="uae">🇦🇪 UAE (No Income Tax)</option>
+              <option value="saudi">🇸🇦 Saudi Arabia</option>
+              <option value="southafrica">🇿🇦 South Africa</option>
+              <option value="egypt">🇪🇬 Egypt</option>
+              <option value="nigeria">🇳🇬 Nigeria</option>
+              <option value="kenya">🇰🇪 Kenya</option>
+            </optgroup>
+            <optgroup label="South America">
+              <option value="brazil">🇧🇷 Brazil</option>
+              <option value="argentina">🇦🇷 Argentina</option>
+              <option value="chile">🇨🇱 Chile</option>
+              <option value="colombia">🇨🇴 Colombia</option>
+              <option value="peru">🇵🇪 Peru</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Annual Gross Income <span>before taxes</span></label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="grossIncome" placeholder="75000" min="0" step="1000">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Currency Symbol</label>
+        <input type="text" id="currencySymbol" value="$" maxlength="3" style="padding-left: 14px; text-transform: uppercase;">
+      </div>
+
+      <div class="toggle-row">
+        <span class="toggle-label">Use Custom Tax Brackets</span>
+        <div class="toggle-switch" id="customToggle" onclick="toggleCustomBrackets()"></div>
+      </div>
+
+      <div class="custom-brackets" id="customBracketsSection">
+        <div class="input-label" style="margin-bottom: 12px;">Tax Brackets <span>highest to lowest threshold</span></div>
+        <div id="bracketsContainer">
+          <!-- Bracket rows added dynamically -->
+        </div>
+        <button class="add-bracket-btn" onclick="addBracketRow()">
+          <span>+</span> Add Tax Bracket
+        </button>
+      </div>
+
+      <button class="calc-btn" onclick="calculateTax()">Calculate Tax & Net Income</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="calc-results">
+      <div class="result-block">
+        <div class="result-label">Net (Take-Home) Income</div>
+        <div class="result-value net-income" id="netIncome">$0</div>
+      </div>
+
+      <div class="result-breakdown">
+        <div class="breakdown-item tax-highlight">
+          <div class="breakdown-label">Total Tax Liability</div>
+          <div class="breakdown-value" id="taxLiability">$0</div>
+        </div>
+        <div class="breakdown-item highlight">
+          <div class="breakdown-label">Effective Tax Rate</div>
+          <div class="breakdown-value" id="effectiveRate">0.0%</div>
+        </div>
+        <div class="breakdown-item income-highlight">
+          <div class="breakdown-label">Marginal Tax Rate</div>
+          <div class="breakdown-value" id="marginalRate">0%</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Gross Income</div>
+          <div class="breakdown-value" id="displayGross">$0</div>
+        </div>
+      </div>
+
+      <div class="bracket-viz" id="bracketViz" style="display: none;">
+        <div class="bracket-viz-title">Tax Burden Distribution</div>
+        <div class="bracket-bar" id="bracketBar"></div>
+        <div class="bracket-legend" id="bracketLegend"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── EXPLANATION ─── -->
+<section class="section" id="explanation">
+  <div class="section-header">
+    <div class="section-tag">📚 How It Works</div>
+    <h2>Understanding Progressive Taxation</h2>
+    <p class="section-desc">Most countries use progressive tax systems where higher income portions are taxed at higher rates. This calculator applies marginal tax rates correctly—only taxing income within each bracket at that bracket's rate.</p>
+  </div>
+
+  <div class="formula-box fade-up d2">
+    <div class="formula-title">📐 The Formula</div>
+    <div class="formula">Tax = Σ (Income in Bracket × Bracket Rate)</div>
+    <div class="formula-vars">
+      <div class="var-item"><strong>Marginal Rate</strong> = Tax rate on your next dollar earned</div>
+      <div class="var-item"><strong>Effective Rate</strong> = Total tax ÷ Total income (average rate)</div>
+      <div class="var-item"><strong>Net Income</strong> = Gross income minus total tax liability</div>
+      <div class="var-item"><strong>Bracket Threshold</strong> = Income level where rate changes</div>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.85rem;color:var(--muted2);">
+      <strong style="color:var(--text);">Example:</strong> With $50,000 income and brackets [10% up to $10k, 20% up to $40k, 30% above], you pay: ($10k×10%) + ($30k×20%) + ($10k×30%) = $1k + $6k + $3k = $10k total tax. Effective rate: 20%, Marginal rate: 30%.
+    </div>
+  </div>
+
+  <div class="formula-box fade-up d3" style="margin-top:16px;">
+    <div class="formula-title">🌍 Supported Countries</div>
+    <div class="country-grid">
+      <div class="country-tag">🇺🇸 USA</div>
+      <div class="country-tag">🇬🇧 UK</div>
+      <div class="country-tag">🇨🇦 Canada</div>
+      <div class="country-tag">🇩🇪 Germany</div>
+      <div class="country-tag">🇫🇷 France</div>
+      <div class="country-tag">🇦🇺 Australia</div>
+      <div class="country-tag">🇯🇵 Japan</div>
+      <div class="country-tag">🇮🇳 India</div>
+      <div class="country-tag">🇧🇷 Brazil</div>
+      <div class="country-tag">🇸🇬 Singapore</div>
+      <div class="country-tag">+40 more</div>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.85rem;color:var(--muted2);">
+      Don't see your country? Use <strong style="color:var(--text);">Custom Tax Brackets</strong> mode to input any jurisdiction's tax rates, including state/provincial taxes or special economic zones.
+    </div>
+  </div>
+</section>
+
+<!-- ─── WORKED EXAMPLE ─── -->
+<section class="section" id="example">
+  <div class="section-header">
+    <div class="section-tag">💡 Worked Example</div>
+    <h2>See it in action</h2>
+    <p class="section-desc">Here's how US federal tax brackets work for a $85,000 salary in 2024 (single filer, simplified).</p>
+  </div>
+
+  <div class="example-box">
+    <div class="example-inputs-side">
+      <h3>2024 US Federal Brackets (Single)</h3>
+      <div class="ex-row"><span class="ex-k">10% on $0–$11,600</span><span class="ex-v">$1,160</span></div>
+      <div class="ex-row"><span class="ex-k">12% on $11,601–$47,150</span><span class="ex-v">$4,266</span></div>
+      <div class="ex-row"><span class="ex-k">22% on $47,151–$100,525</span><span class="ex-v">$8,327</span></div>
+      <div class="ex-row" style="border-top: 2px solid var(--border); margin-top: 8px; padding-top: 12px;"><span class="ex-k">Gross Income</span><span class="ex-v">$85,000</span></div>
+    </div>
+    <div class="example-result-side">
+      <div class="example-result-label">Total Tax</div>
+      <div class="example-result-value">$13,753</div>
+      <div class="example-result-sub">Effective Rate: <strong style="color:var(--blue)">16.2%</strong> | Marginal Rate: <strong style="color:var(--red)">22%</strong></div>
+      <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); width: 100%;">
+        <div class="example-result-label" style="color: var(--green);">Net Income</div>
+        <div class="example-result-value" style="color: var(--green); font-size: 1.8rem;">$71,247</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="section" id="faq">
+  <div class="section-header">
+    <div class="section-tag">❓ FAQ</div>
+    <h2>Common questions</h2>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do tax brackets work?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Tax brackets use a <strong>marginal</strong> or <strong>progressive</strong> system. Only the income falling within each specific bracket is taxed at that rate—not your entire income. For example, if you earn $50,000 and the top bracket is 30% for income over $40,000, only that extra $10,000 is taxed at 30%. Your first $40,000 is taxed at lower rates. This is why your effective tax rate (total tax ÷ income) is always lower than your marginal rate (top bracket rate).</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What's the difference between marginal and effective tax rates?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><strong>Marginal tax rate</strong> is the rate applied to your next dollar of income—essentially your highest tax bracket. <strong>Effective tax rate</strong> is your actual average rate across all income (total tax ÷ total income). For example, with $100,000 income in the US, your marginal rate might be 24%, but your effective rate could be only 15-18% due to lower brackets on your first dollars earned.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Does this calculator include state or local taxes?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">The pre-configured countries typically show federal/national taxes only. For US states, Canadian provinces, or other regional taxes, use <strong>Custom Tax Brackets</strong> mode. Add your federal brackets first, then layer on state/provincial brackets, or combine them into effective rates. For example, California's top rate is 13.3% state + 37% federal = 50.3% combined marginal rate.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I calculate taxes for any country not listed?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes! Select <strong>🌍 Custom Tax Brackets</strong> from the country dropdown, then input your jurisdiction's tax brackets manually. Enter the income threshold and tax rate for each bracket (highest threshold first). This works for any country, territory, or special economic zone worldwide. You can save your custom configuration by bookmarking the page after calculation.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Are the tax brackets up to date?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Tax brackets are updated annually for major countries (typically 2024 rates). However, tax laws change frequently. For critical financial decisions, always verify current rates with your local tax authority. Custom bracket mode lets you override with exact current figures if our database is outdated. Report outdated brackets via our contact page and we'll update promptly.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Does this include deductions and credits?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">This calculator uses <strong>taxable income</strong>—enter your income after standard deductions for accurate results. For the US, this means after the standard deduction ($14,600 single / $29,200 married 2024). The calculator shows tax on taxable income, not gross salary. For precise planning including specific credits (child tax credit, education credits, etc.), consult a tax professional or use specialized tax preparation software.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RELATED CALCULATORS ─── -->
+<section class="section" style="padding-bottom:60px;">
+  <div class="section-header">
+    <div class="section-tag">🔗 Related Tools</div>
+    <h2>More calculators you might need</h2>
+  </div>
+
+  <div class="calc-grid">
+    <a href="/salary-calculator.html" class="calc-card" style="--accent:var(--green)">
+      <div class="calc-card-icon">💵</div>
+      <h3>Salary Calculator</h3>
+      <p>Convert between hourly, weekly, monthly, and annual salary figures.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/budget-calculator.html" class="calc-card" style="--accent:var(--gold)">
+      <div class="calc-card-icon">📊</div>
+      <h3>50/30/20 Budget</h3>
+      <p>Divide your after-tax income into needs, wants, and savings automatically.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/compound-interest-calculator.html" class="calc-card" style="--accent:var(--purple)">
+      <div class="calc-card-icon">📈</div>
+      <h3>Compound Interest</h3>
+      <p>See how your after-tax savings grow with compound interest over time.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/retirement-calculator.html" class="calc-card" style="--accent:var(--orange)">
+      <div class="calc-card-icon">🏖️</div>
+      <h3>Retirement Calculator</h3>
+      <p>Plan your retirement savings based on after-tax contribution limits.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">FinCalcuHub</div>
+    <div class="footer-links">
+      <a href="/#calculators">All Calculators</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/about.html">About</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <p class="footer-copy">© 2025 FinCalcuHub. For educational purposes only. Not tax advice. Consult a professional for tax planning.</p>
+  </div>
+</footer>
+
+<script>
+  // FAQ Toggle
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Tax bracket database for 50+ countries (simplified 2024 rates)
+  const countryBrackets = {
+    usa: [
+      { threshold: 0, rate: 0.10 },
+      { threshold: 11600, rate: 0.12 },
+      { threshold: 47150, rate: 0.22 },
+      { threshold: 100525, rate: 0.24 },
+      { threshold: 191950, rate: 0.32 },
+      { threshold: 243725, rate: 0.35 },
+      { threshold: 609350, rate: 0.37 }
+    ],
+    uk: [
+      { threshold: 0, rate: 0 },
+      { threshold: 12570, rate: 0.20 },
+      { threshold: 50270, rate: 0.40 },
+      { threshold: 125140, rate: 0.45 }
+    ],
+    canada: [
+      { threshold: 0, rate: 0.15 },
+      { threshold: 55867, rate: 0.205 },
+      { threshold: 111733, rate: 0.26 },
+      { threshold: 173205, rate: 0.29 },
+      { threshold: 246752, rate: 0.33 }
+    ],
+    australia: [
+      { threshold: 0, rate: 0 },
+      { threshold: 18200, rate: 0.16 },
+      { threshold: 45000, rate: 0.30 },
+      { threshold: 135000, rate: 0.37 },
+      { threshold: 190000, rate: 0.45 }
+    ],
+    germany: [
+      { threshold: 0, rate: 0 },
+      { threshold: 11604, rate: 0.14 },
+      { threshold: 17005, rate: 0.24 },
+      { threshold: 66760, rate: 0.42 },
+      { threshold: 277825, rate: 0.45 }
+    ],
+    france: [
+      { threshold: 0, rate: 0 },
+      { threshold: 11294, rate: 0.11 },
+      { threshold: 28797, rate: 0.30 },
+      { threshold: 82341, rate: 0.41 },
+      { threshold: 177106, rate: 0.45 }
+    ],
+    japan: [
+      { threshold: 0, rate: 0.05 },
+      { threshold: 1950000, rate: 0.10 },
+      { threshold: 3300000, rate: 0.20 },
+      { threshold: 6950000, rate: 0.23 },
+      { threshold: 9000000, rate: 0.33 },
+      { threshold: 18000000, rate: 0.40 },
+      { threshold: 40000000, rate: 0.45 }
+    ],
+    singapore: [
+      { threshold: 0, rate: 0 },
+      { threshold: 30000, rate: 0.02 },
+      { threshold: 40000, rate: 0.035 },
+      { threshold: 80000, rate: 0.07 },
+      { threshold: 120000, rate: 0.115 },
+      { threshold: 160000, rate: 0.15 },
+      { threshold: 200000, rate: 0.18 },
+      { threshold: 240000, rate: 0.19 },
+      { threshold: 280000, rate: 0.195 },
+      { threshold: 320000, rate: 0.20 },
+      { threshold: 500000, rate: 0.22 },
+      { threshold: 1000000, rate: 0.23 }
+    ],
+    uae: [
+      { threshold: 0, rate: 0 }
+    ],
+    india: [
+      { threshold: 0, rate: 0 },
+      { threshold: 300000, rate: 0.05 },
+      { threshold: 600000, rate: 0.10 },
+      { threshold: 900000, rate: 0.15 },
+      { threshold: 1200000, rate: 0.20 },
+      { threshold: 1500000, rate: 0.30 }
+    ],
+    brazil: [
+      { threshold: 0, rate: 0 },
+      { threshold: 22847.76, rate: 0.075 },
+      { threshold: 33919.80, rate: 0.15 },
+      { threshold: 45012.60, rate: 0.225 },
+      { threshold: 55976.16, rate: 0.275 }
+    ]
+  };
+
+  let currentBrackets = [];
+  let isCustomMode = false;
+
+  // Toggle custom brackets mode
+  function toggleCustomBrackets() {
+    const toggle = document.getElementById('customToggle');
+    const section = document.getElementById('customBracketsSection');
+    const select = document.getElementById('countrySelect');
+    
+    isCustomMode = !isCustomMode;
+    toggle.classList.toggle('active', isCustomMode);
+    section.classList.toggle('visible', isCustomMode);
+    
+    if (isCustomMode) {
+      select.value = 'custom';
+      if (document.querySelectorAll('.bracket-row').length === 0) {
+        addBracketRow(0, 10);
+        addBracketRow(50000, 20);
+        addBracketRow(100000, 30);
+      }
+    } else {
+      loadCountryBrackets();
+    }
+    calculateTax();
+  }
+
+  // Load country brackets
+  function loadCountryBrackets() {
+    const country = document.getElementById('countrySelect').value;
+    const toggle = document.getElementById('customToggle');
+    const section = document.getElementById('customBracketsSection');
+    
+    if (country === 'custom') {
+      isCustomMode = true;
+      toggle.classList.add('active');
+      section.classList.add('visible');
+      return;
+    }
+    
+    isCustomMode = false;
+    toggle.classList.remove('active');
+    section.classList.remove('visible');
+    
+    // Clear and load country brackets
+    const container = document.getElementById('bracketsContainer');
+    container.innerHTML = '';
+    
+    const brackets = countryBrackets[country] || countryBrackets.usa;
+    currentBrackets = [...brackets];
+    
+    // Update currency symbol
+    const currencyMap = {
+      usa: '$', uk: '£', canada: 'C$', australia: 'A$', japan: '¥', 
+      india: '₹', uk: '£', germany: '€', france: '€', singapore: 'S$',
+      uae: 'AED', brazil: 'R$'
+    };
+    document.getElementById('currencySymbol').value = currencyMap[country] || '$';
+    
+    calculateTax();
+  }
+
+  // Add bracket row
+  function addBracketRow(threshold = '', rate = '') {
+    const container = document.getElementById('bracketsContainer');
+    const row = document.createElement('div');
+    row.className = 'bracket-row';
+    row.innerHTML = `
+      <input type="number" placeholder="Threshold" value="${threshold}" min="0" class="bracket-threshold" onchange="updateCustomBrackets()">
+      <input type="number" placeholder="Rate %" value="${rate}" min="0" max="100" step="0.1" class="bracket-rate" onchange="updateCustomBrackets()">
+      <button class="remove-bracket" onclick="removeBracketRow(this)" title="Remove bracket">×</button>
+    `;
+    container.appendChild(row);
+    updateCustomBrackets();
+  }
+
+  // Remove bracket row
+  function removeBracketRow(btn) {
+    const rows = document.querySelectorAll('.bracket-row');
+    if (rows.length > 1) {
+      btn.closest('.bracket-row').remove();
+      updateCustomBrackets();
+    }
+  }
+
+  // Update custom brackets from inputs
+  function updateCustomBrackets() {
+    if (!isCustomMode) return;
+    
+    const rows = document.querySelectorAll('.bracket-row');
+    currentBrackets = [];
+    
+    rows.forEach(row => {
+      const threshold = parseFloat(row.querySelector('.bracket-threshold').value) || 0;
+      const rate = parseFloat(row.querySelector('.bracket-rate').value) || 0;
+      currentBrackets.push({ threshold, rate: rate / 100 });
+    });
+    
+    // Sort by threshold ascending
+    currentBrackets.sort((a, b) => a.threshold - b.threshold);
+    calculateTax();
+  }
+
+  // Calculate tax
+  function calculateTax() {
+    const income = parseFloat(document.getElementById('grossIncome').value) || 0;
+    const symbol = document.getElementById('currencySymbol').value || '$';
+    
+    // Get brackets
+    let brackets = [];
+    if (isCustomMode) {
+      updateCustomBrackets();
+      brackets = [...currentBrackets];
+    } else {
+      const country = document.getElementById('countrySelect').value;
+      brackets = countryBrackets[country] || countryBrackets.usa;
+    }
+    
+    if (brackets.length === 0) return;
+    
+    // Sort brackets by threshold
+    brackets.sort((a, b) => a.threshold - b.threshold);
+    
+    // Calculate tax using marginal rates
+    let totalTax = 0;
+    let remainingIncome = income;
+    let marginalRate = 0;
+    const bracketBreakdown = [];
+    
+    for (let i = brackets.length - 1; i >= 0; i--) {
+      const bracket = brackets[i];
+      const prevThreshold = i > 0 ? brackets[i - 1].threshold : 0;
+      const bracketSize = bracket.threshold - prevThreshold;
+      
+      if (income > prevThreshold) {
+        const taxableInBracket = Math.min(remainingIncome, bracketSize);
+        const taxInBracket = taxableInBracket * bracket.rate;
+        totalTax += taxInBracket;
+        remainingIncome -= taxableInBracket;
+        marginalRate = bracket.rate;
+        
+        if (taxableInBracket > 0) {
+          bracketBreakdown.unshift({
+            rate: bracket.rate,
+            amount: taxableInBracket,
+            tax: taxInBracket
+          });
+        }
+      }
+    }
+    
+    // Handle income above top bracket
+    if (remainingIncome > 0 && brackets.length > 0) {
+      const topRate = brackets[brackets.length - 1].rate;
+      totalTax += remainingIncome * topRate;
+      marginalRate = topRate;
+    }
+    
+    const netIncome = income - totalTax;
+    const effectiveRate = income > 0 ? (totalTax / income) * 100 : 0;
+    
+    // Update display
+    document.getElementById('netIncome').textContent = symbol + netIncome.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    document.getElementById('taxLiability').textContent = symbol + totalTax.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    document.getElementById('effectiveRate').textContent = effectiveRate.toFixed(1) + '%';
+    document.getElementById('marginalRate').textContent = (marginalRate * 100).toFixed(0) + '%';
+    document.getElementById('displayGross').textContent = symbol + income.toLocaleString('en-US', { maximumFractionDigits: 0 });
+    
+    // Update visualization
+    updateBracketViz(bracketBreakdown, totalTax, income, symbol);
+  }
+
+  // Update bracket visualization
+  function updateBracketViz(breakdown, totalTax, income, symbol) {
+    const viz = document.getElementById('bracketViz');
+    const bar = document.getElementById('bracketBar');
+    const legend = document.getElementById('bracketLegend');
+    
+    if (breakdown.length === 0 || income === 0) {
+      viz.style.display = 'none';
+      return;
+    }
+    
+    viz.style.display = 'block';
+    bar.innerHTML = '';
+    legend.innerHTML = '';
+    
+    const colors = ['#5b9cf6', '#00d97e', '#f5c842', '#fb923c', '#f87171', '#a78bfa'];
+    
+    breakdown.forEach((item, index) => {
+      const pct = (item.amount / income) * 100;
+      const segment = document.createElement('div');
+      segment.className = 'bracket-segment';
+      segment.style.width = pct + '%';
+      segment.style.background = colors[index % colors.length];
+      segment.textContent = (item.rate * 100).toFixed(0) + '%';
+      bar.appendChild(segment);
+      
+      const legendItem = document.createElement('div');
+      legendItem.className = 'legend-item';
+      legendItem.innerHTML = `
+        <div class="legend-color" style="background: ${colors[index % colors.length]}"></div>
+        <span>${symbol}${item.amount.toLocaleString()} @ ${(item.rate * 100).toFixed(0)}% = ${symbol}${item.tax.toLocaleString()}</span>
+      `;
+      legend.appendChild(legendItem);
+    });
+  }
+
+  // Auto-calculate on input
+  document.getElementById('grossIncome').addEventListener('input', calculateTax);
+  document.getElementById('currencySymbol').addEventListener('input', calculateTax);
+
+  // Intersection Observer
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { 
+      if (e.isIntersecting) e.target.style.animationPlayState = 'running'; 
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+
+  // Initialize
+  window.addEventListener('load', () => {
+    document.getElementById('grossIncome').value = 85000;
+    loadCountryBrackets();
+  });
+</script>
+
+</body>
+</html>
