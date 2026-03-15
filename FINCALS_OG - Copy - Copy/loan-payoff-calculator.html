@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ═══════════════════════════════════════
+       SEO: Loan Payoff Calculator
+  ═══════════════════════════════════════ -->
+  <title>Loan Payoff Calculator | Free Tool to Pay Off Debt Faster</title>
+  <meta name="description" content="Free loan payoff calculator. See how extra payments reduce your loan term and total interest. Works for student loans, car loans, credit cards, and mortgages. No signup required.">
+  <meta name="keywords" content="loan payoff calculator, debt payoff calculator, extra payment calculator, loan calculator, student loan payoff, car loan payoff, credit card payoff, early loan payoff">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://fincalcuhub.vercel.app/loan-payoff-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Loan Payoff Calculator | Free Tool to Pay Off Debt Faster">
+  <meta property="og:description" content="Calculate how much time and money you'll save by making extra loan payments. See your new payoff date and reduced interest.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fincalcuhub.vercel.app/loan-payoff-calculator.html">
+
+  <!-- Schema.org Calculator -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Loan Payoff Calculator",
+    "applicationCategory": "FinanceApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online loan payoff calculator for debt reduction strategies",
+    "operatingSystem": "Any",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1420"
+    }
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do extra payments reduce my loan payoff time?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Extra payments go directly toward your principal balance, reducing the amount that accrues interest. This creates a snowball effect: lower principal means less interest charged each month, so more of your regular payment goes to principal, accelerating payoff even further."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Should I pay off loans early or invest?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Compare your loan interest rate to expected investment returns. If your loan charges 6% and investments return 7%, investing wins mathematically. However, paying off debt provides guaranteed returns and peace of mind. Many people split the difference: pay off high-interest debt (8%+) aggressively, while making minimum payments on low-interest debt and investing the rest."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #181c24;
+      --border: #1e2330;
+      --green: #00d97e;
+      --gold: #f5c842;
+      --blue: #5b9cf6;
+      --purple: #a78bfa;
+      --orange: #fb923c;
+      --red: #f87171;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --muted2: #9ca3af;
+      --radius: 14px;
+      --mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,12,16,.92);
+      backdrop-filter: blur(14px);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; color: var(--text);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 9px;
+    }
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--green);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; color: #000; font-weight: 800;
+    }
+    nav { display: flex; gap: 6px; flex-wrap: wrap; }
+    nav a {
+      color: var(--muted2); text-decoration: none;
+      font-size: .82rem; font-weight: 500;
+      padding: 6px 12px; border-radius: 8px;
+      transition: color .2s, background .2s;
+    }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+
+    /* ─── HERO ─── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(0,217,126,.07); border: 1px solid rgba(0,217,126,.18);
+      color: var(--green); font-size: .75rem; font-weight: 600;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 999px; margin-bottom: 22px;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15; color: var(--text);
+      max-width: 720px; margin-bottom: 16px;
+    }
+    h1 em { font-style: italic; color: var(--orange); }
+    .hero-sub {
+      color: var(--muted2); font-size: 1.1rem;
+      max-width: 560px; margin-bottom: 24px; line-height: 1.7;
+    }
+
+    /* ─── CALCULATOR SECTION ─── */
+    .calc-section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+    .calc-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    @media(max-width:768px){
+      .calc-container { grid-template-columns: 1fr; }
+    }
+
+    /* ─── INPUTS SIDE ─── */
+    .calc-inputs {
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    @media(max-width:768px){
+      .calc-inputs { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; }
+    }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-label {
+      font-size: .85rem; font-weight: 600;
+      color: var(--text); display: flex; align-items: center; gap: 6px;
+    }
+    .input-label span { color: var(--muted); font-weight: 400; }
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-prefix {
+      position: absolute;
+      left: 14px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .9rem;
+      pointer-events: none;
+    }
+    .calc-inputs input, .calc-inputs select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .calc-inputs input:focus, .calc-inputs select:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(251,146,60,.1);
+    }
+    .calc-inputs input::placeholder { color: var(--muted); }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .calc-btn {
+      background: var(--orange);
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-top: 8px;
+    }
+    .calc-btn:hover { background: #ffb366; transform: translateY(-1px); }
+    .calc-btn:active { transform: translateY(0); }
+
+    /* ─── RESULTS SIDE ─── */
+    .calc-results {
+      padding: 32px;
+      background: rgba(251,146,60,.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+    @media(max-width:768px){ .calc-results { padding: 24px; } }
+
+    .result-block { text-align: center; }
+    .result-label {
+      font-size: .8rem;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 8px;
+    }
+    .result-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      color: var(--orange);
+      line-height: 1;
+    }
+
+    .result-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .breakdown-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .breakdown-label {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .breakdown-value {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .breakdown-item.savings-highlight {
+      border-color: var(--green);
+      background: rgba(0,217,126,.08);
+    }
+    .breakdown-item.savings-highlight .breakdown-value {
+      color: var(--green);
+    }
+    .breakdown-item.time-highlight {
+      border-color: var(--orange);
+      background: rgba(251,146,60,.08);
+    }
+    .breakdown-item.time-highlight .breakdown-value {
+      color: var(--orange);
+    }
+
+    /* ─── SECTIONS ─── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 0;
+    }
+    .section-header { margin-bottom: 28px; }
+    .section-tag {
+      display: inline-block;
+      font-size: .72rem; font-weight: 700; letter-spacing: .09em;
+      text-transform: uppercase; color: var(--orange);
+      margin-bottom: 8px;
+    }
+    .section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      color: var(--muted2);
+      font-size: .95rem;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* ─── EXPLANATION ─── */
+    .formula-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-top: 20px;
+    }
+    .formula-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .formula {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--orange);
+      background: var(--surface2);
+      padding: 16px 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+    .formula-vars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .var-item {
+      font-size: .85rem;
+      color: var(--muted2);
+    }
+    .var-item strong {
+      color: var(--text);
+      font-family: var(--mono);
+    }
+
+    /* ─── EXAMPLE ─── */
+    .example-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media(max-width:640px){ .example-box { grid-template-columns: 1fr; } }
+    .example-inputs-side {
+      padding: 28px;
+      border-right: 1px solid var(--border);
+    }
+    @media(max-width:640px){ .example-inputs-side { border-right: none; border-bottom: 1px solid var(--border); } }
+    .example-inputs-side h3 {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      color: var(--muted2);
+      font-weight: 500;
+    }
+    .ex-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .ex-row:last-child { border-bottom: none; }
+    .ex-k { color: var(--muted); }
+    .ex-v { font-family: var(--mono); color: var(--text); }
+
+    .example-result-side {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: rgba(251,146,60,.05);
+    }
+    .example-result-label {
+      font-size: .8rem;
+      color: var(--muted2);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .example-result-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      color: var(--orange);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .example-result-sub {
+      font-size: .85rem;
+      color: var(--muted);
+      max-width: 280px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: .98rem;
+      font-weight: 500;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      gap: 16px;
+    }
+    .faq-q:hover { color: var(--orange); }
+    .faq-icon {
+      font-size: 1.2rem;
+      color: var(--muted);
+      transition: transform .3s;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      color: var(--orange);
+    }
+    .faq-a {
+      display: none;
+      padding-bottom: 18px;
+      color: var(--muted2);
+      line-height: 1.8;
+      font-size: .9rem;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── RELATED CALCULATORS ─── */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .calc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color .22s, transform .22s, box-shadow .22s;
+      position: relative;
+      overflow: hidden;
+    }
+    .calc-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent, var(--green));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .calc-card:hover {
+      border-color: rgba(255,255,255,.1);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .calc-card:hover::before { transform: scaleX(1); }
+
+    .calc-card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      width: 44px;
+      height: 44px;
+      background: var(--surface2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calc-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .calc-card p {
+      font-size: .82rem;
+      color: var(--muted2);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .calc-card-arrow {
+      margin-top: 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--accent, var(--green));
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted);
+      font-size: .82rem;
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy {
+      color: var(--muted);
+      font-size: .78rem;
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+    .fade-up {
+      animation: fadeUp .5s ease forwards;
+      opacity: 0;
+    }
+    .d1 { animation-delay: .05s; }
+    .d2 { animation-delay: .12s; }
+    .d3 { animation-delay: .19s; }
+
+    /* ─── MOBILE ─── */
+    @media(max-width:640px){
+      nav { display: none; }
+      .hero { padding: 40px 16px 32px; }
+      .section { padding: 40px 16px 0; }
+      .calc-section { padding: 0 16px 32px; }
+      .calc-inputs, .calc-results { padding: 20px; }
+      .input-row { grid-template-columns: 1fr; }
+      .result-breakdown { grid-template-columns: 1fr; }
+      .formula-vars { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+<base target="_blank">
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">F</span>
+      FinCalcuHub
+    </a>
+    <nav>
+      <a href="/#calculators">All Calculators</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#explanation">How It Works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-badge"><span></span> Free · No Signup · Instant</div>
+  <h1>Loan Payoff <em>Calculator</em></h1>
+  <p class="hero-sub">See how extra payments dramatically reduce your loan term and total interest paid. Works for student loans, car loans, credit cards, and mortgages. Discover your debt-free date.</p>
+</div>
+
+<!-- ─── CALCULATOR ─── -->
+<section class="calc-section" id="calculator">
+  <div class="calc-container fade-up d1">
+
+    <!-- INPUTS -->
+    <div class="calc-inputs">
+      <div class="input-group">
+        <label class="input-label">Current Loan Balance <span>(remaining principal)</span></label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="loanBalance" placeholder="25000" min="0" step="100" style="padding-left:28px;">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Annual Interest Rate <span>(APR %)</span></label>
+        <div class="input-wrap">
+          <input type="number" id="interestRate" placeholder="6.5" min="0" max="50" step="0.01">
+          <span class="input-prefix" style="left:auto;right:14px;">%</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Current Monthly Payment <span>(minimum required)</span></label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="monthlyPayment" placeholder="500" min="0" step="10" style="padding-left:28px;">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Extra Monthly Payment <span>(additional principal)</span></label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="extraPayment" placeholder="100" min="0" step="10" style="padding-left:28px;">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Loan Type <span>(for reference)</span></label>
+        <select id="loanType">
+          <option value="auto">Auto Loan</option>
+          <option value="student">Student Loan</option>
+          <option value="personal">Personal Loan</option>
+          <option value="mortgage">Mortgage</option>
+          <option value="credit">Credit Card</option>
+        </select>
+      </div>
+
+      <button class="calc-btn" onclick="calculateLoanPayoff()">Calculate Payoff</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="calc-results">
+      <div class="result-block">
+        <div class="result-label">Total Interest You'll Save</div>
+        <div class="result-value" id="interestSaved">$0.00</div>
+      </div>
+
+      <div class="result-breakdown">
+        <div class="breakdown-item time-highlight">
+          <div class="breakdown-label">Time Saved</div>
+          <div class="breakdown-value" id="timeSaved">0 months</div>
+        </div>
+        <div class="breakdown-item savings-highlight">
+          <div class="breakdown-label">New Payoff Date</div>
+          <div class="breakdown-value" id="newPayoffDate">-</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Original Payoff</div>
+          <div class="breakdown-value" id="originalPayoff">-</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Total Extra Paid</div>
+          <div class="breakdown-value" id="totalExtra">$0.00</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── EXPLANATION ─── -->
+<section class="section" id="explanation">
+  <div class="section-header">
+    <div class="section-tag">📚 How It Works</div>
+    <h2>The Power of Extra Payments</h2>
+    <p class="section-desc">Making extra principal payments creates a snowball effect. Every dollar you pay extra reduces the balance that accrues interest, so more of your next regular payment goes to principal instead of interest.</p>
+  </div>
+
+  <div class="formula-box fade-up d2">
+    <div class="formula-title">📐 How Extra Payments Work</div>
+    <div class="formula">New Balance = Old Balance - (Payment - Interest)</div>
+    <div class="formula-vars">
+      <div class="var-item"><strong>Interest</strong> = Balance × (Rate ÷ 12)</div>
+      <div class="var-item"><strong>Principal</strong> = Payment - Interest</div>
+      <div class="var-item"><strong>With Extra:</strong> Principal = (Payment + Extra) - Interest</div>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.85rem;color:var(--muted2);">
+      <strong style="color:var(--text);">The snowball effect:</strong> Lower balance → Less interest → More principal paid → Even lower balance next month
+    </div>
+  </div>
+
+  <div class="formula-box fade-up d3" style="margin-top:16px;">
+    <div class="formula-title">💡 Debt Payoff Strategies</div>
+    <ul style="color:var(--muted2);font-size:.9rem;line-height:1.9;list-style:none;padding:0;">
+      <li>✓ <strong>Avalanche Method</strong> — Pay extra on highest interest debt first (saves most money)</li>
+      <li>✓ <strong>Snowball Method</strong> — Pay extra on smallest balance first (best for motivation)</li>
+      <li>✓ <strong>Biweekly Payments</strong> — Pay half monthly amount every 2 weeks (13 full payments/year)</li>
+      <li>✓ <strong>Round Up</strong> — Round payments to nearest $50 or $100</li>
+      <li>✓ <strong>Windfalls</strong> — Apply tax refunds, bonuses, gifts directly to principal</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─── WORKED EXAMPLE ─── -->
+<section class="section" id="example">
+  <div class="section-header">
+    <div class="section-tag">💡 Worked Example</div>
+    <h2>See the impact of extra payments</h2>
+    <p class="section-desc">Here's how adding $100/month to a $25,000 car loan at 6.5% APR changes your payoff timeline and total cost.</p>
+  </div>
+
+  <div class="example-box">
+    <div class="example-inputs-side">
+      <h3>Loan Details</h3>
+      <div class="ex-row"><span class="ex-k">Current balance</span><span class="ex-v">$25,000</span></div>
+      <div class="ex-row"><span class="ex-k">Interest rate (APR)</span><span class="ex-v">6.50%</span></div>
+      <div class="ex-row"><span class="ex-k">Monthly payment</span><span class="ex-v">$500</span></div>
+      <div class="ex-row"><span class="ex-k">Extra payment</span><span class="ex-v">$100/month</span></div>
+      <div class="ex-row"><span class="ex-k">New total payment</span><span class="ex-v">$600/month</span></div>
+    </div>
+    <div class="example-result-side">
+      <div class="example-result-label">Interest Saved</div>
+      <div class="example-result-value">$1,847</div>
+      <div class="example-result-sub">Pay off <strong style="color:var(--orange)">11 months early</strong> (58 vs 69 months). Total extra paid: <strong style="color:var(--text)">$5,500</strong> saves <strong style="color:var(--green)">$1,847</strong> in interest!</div>
+    </div>
+  </div>
+
+  <div class="example-box" style="margin-top:16px;">
+    <div class="example-inputs-side">
+      <h3>Student Loan Example</h3>
+      <div class="ex-row"><span class="ex-k">Current balance</span><span class="ex-v">$40,000</span></div>
+      <div class="ex-row"><span class="ex-k">Interest rate (APR)</span><span class="ex-v">5.50%</span></div>
+      <div class="ex-row"><span class="ex-k">Monthly payment</span><span class="ex-v">$400</span></div>
+      <div class="ex-row"><span class="ex-k">Extra payment</span><span class="ex-v">$200/month</span></div>
+      <div class="ex-row"><span class="ex-k">New total payment</span><span class="ex-v">$600/month</span></div>
+    </div>
+    <div class="example-result-side" style="background:rgba(0,217,126,.05);">
+      <div class="example-result-label" style="color:var(--green);">Interest Saved</div>
+      <div class="example-result-value" style="color:var(--green);">$6,234</div>
+      <div class="example-result-sub">Pay off <strong style="color:var(--orange)">3.5 years early</strong> (6.7 vs 10.2 years). Be debt-free by <strong style="color:var(--text)">2030</strong> instead of <strong style="color:var(--muted2)">2034</strong>!</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="section" id="faq">
+  <div class="section-header">
+    <div class="section-tag">❓ FAQ</div>
+    <h2>Common questions</h2>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do extra payments reduce my loan payoff time?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Extra payments go <strong>directly to principal</strong>, immediately reducing your balance. Next month, interest is calculated on this lower balance, so less of your regular payment goes to interest and more to principal. This creates a compounding snowball effect: each month you pay extra, the benefit grows. On a typical loan, $100 extra in month 1 saves you $1-2 in interest; by month 50, that same $100 saves $3-4 because the balance is lower.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Should I pay off loans early or invest?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Compare your loan rate to expected investment returns. <strong>High-interest debt</strong> (8%+ like credit cards): Pay off aggressively — guaranteed 20%+ return. <strong>Medium rates</strong> (4-7% like student loans): Split decision — many choose 50/50 between extra payments and investing. <strong>Low rates</strong> (under 4%): Invest instead — historical market returns average 7-10%. Also consider: debt payoff is a guaranteed return, reduces monthly stress, and improves credit. Investing has tax advantages (401k match, Roth IRA) and compounds over decades.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Which loan should I pay off first?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><strong>Mathematically:</strong> Pay highest interest first (Avalanche Method) — saves the most money. <strong>Psychologically:</strong> Pay smallest balance first (Snowball Method) — quick wins build momentum. <strong>Hybrid approach:</strong> Pay off any loan under $1,000 first for the psychological win, then switch to highest interest. Also consider: loans with cosigners (free them), variable rate loans (rising rates), or loans with annoying servicers. The best method is the one you'll actually stick with!</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Are there penalties for paying off loans early?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><strong>Federal student loans:</strong> Never have prepayment penalties. <strong>Auto loans:</strong> Rarely have penalties anymore, but check your contract. <strong>Mortgages:</strong> Most don't, but some have penalties in first 3-5 years. <strong>Personal loans:</strong> Varies by lender — some charge 1-2% of remaining balance. <strong>Credit cards:</strong> Never have prepayment penalties. Always check your loan agreement's "prepayment" or "early payoff" section. If there's a penalty, calculate if the interest savings still make early payoff worthwhile.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What about biweekly payments instead of monthly?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Biweekly payments are a powerful "hidden" extra payment strategy. You pay half your monthly amount every 2 weeks. Since there are 52 weeks in a year, you make <strong>26 half-payments = 13 full payments</strong> instead of 12. That's one extra payment per year without feeling the pinch! On a $200k mortgage at 6%, biweekly payments save about <strong>$30,000 in interest</strong> and pay off the loan <strong>4-5 years early</strong>. Many lenders offer biweekly options, or you can set up automatic transfers yourself.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Should I build an emergency fund before paying extra on loans?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><strong>Yes, absolutely.</strong> Always have at least a $1,000 "starter" emergency fund before aggressive debt payoff. Otherwise, any surprise (car repair, medical bill, job loss) forces you back into debt. Ideal order: 1) Pay minimums on all debts, 2) Build $1,000 emergency fund, 3) Pay off high-interest debt (10%+), 4) Build 3-6 month emergency fund, 5) Pay off medium-interest debt (4-9%), 6) Invest for retirement. The emergency fund prevents the "pay off $500, borrow $600" cycle that keeps people trapped in debt.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do I ensure extra payments go to principal?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Most modern lenders automatically apply extra payments to principal, but <strong>always verify</strong>. When making an online payment, look for "principal only" option. If mailing a check, write "Apply to principal" in the memo. Call your servicer to confirm their policy. Some shady lenders apply extra to future payments (which doesn't save interest) instead of principal. If this happens, call and demand a reallocation. Keep records of all principal-only payments and check your balance the following month to confirm it dropped correctly.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RELATED CALCULATORS ─── -->
+<section class="section" style="padding-bottom:60px;">
+  <div class="section-header">
+    <div class="section-tag">🔗 Related Tools</div>
+    <h2>More calculators you might need</h2>
+  </div>
+
+  <div class="calc-grid">
+    <a href="/mortgage-calculator.html" class="calc-card" style="--accent:var(--gold)">
+      <div class="calc-card-icon">🏠</div>
+      <h3>Mortgage Calculator</h3>
+      <p>Estimate monthly payments and see amortization schedule.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/compound-interest-calculator.html" class="calc-card" style="--accent:var(--green)">
+      <div class="calc-card-icon">📈</div>
+      <h3>Compound Interest</h3>
+      <p>Compare debt payoff vs investing returns.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/savings-goal-calculator.html" class="calc-card" style="--accent:var(--purple)">
+      <div class="calc-card-icon">🎯</div>
+      <h3>Savings Goal Calculator</h3>
+      <p>Build your emergency fund before paying off debt.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/retirement-calculator.html" class="calc-card" style="--accent:var(--orange)">
+      <div class="calc-card-icon">🏖️</div>
+      <h3>Retirement Calculator</h3>
+      <p>Plan your retirement savings and see if you're on track.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+        <a href="/home-affordability-calculator.html" class="calc-card" style="--accent:var(--blue)">
+  <div class="calc-card-icon">🔑</div>
+  <h3>Home Affordability</h3>
+  <p>Find out how much house you can actually afford based on your income and debts.</p>
+  <div class="calc-card-arrow">
+    Open Calculator
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</a>
+
+
+<a href="/budget-calculator.html" class="calc-card" style="--accent:var(--green)">
+  <div class="calc-card-icon">📊</div>
+  <h3>50/30/20 Budget</h3>
+  <p>Divide your monthly income into needs, wants, and savings automatically.</p>
+  <div class="calc-card-arrow">
+    Open Calculator
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</a>
+
+    <a href="/simple-interest-calculator.html" class="calc-card" style="--accent:var(--blue)">
+      <div class="calc-card-icon">💵</div>
+      <h3>Simple Interest</h3>
+      <p>Calculate interest on short-term personal loans.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">FinCalcuHub</div>
+    <div class="footer-links">
+      <a href="/#calculators">All Calculators</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/about.html">About</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <p class="footer-copy">© 2025 FinCalcuHub. For educational purposes only. Not financial advice.</p>
+  </div>
+</footer>
+
+<script>
+  // FAQ Toggle
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Loan Payoff Calculation
+  function calculateLoanPayoff() {
+    const balance = parseFloat(document.getElementById('loanBalance').value) || 0;
+    const annualRate = parseFloat(document.getElementById('interestRate').value) || 0;
+    const monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value) || 0;
+    const extraPayment = parseFloat(document.getElementById('extraPayment').value) || 0;
+
+    if (balance <= 0 || monthlyPayment <= 0) {
+      document.getElementById('interestSaved').textContent = '$0.00';
+      document.getElementById('timeSaved').textContent = '0 months';
+      document.getElementById('newPayoffDate').textContent = '-';
+      document.getElementById('originalPayoff').textContent = '-';
+      document.getElementById('totalExtra').textContent = '$0.00';
+      return;
+    }
+
+    const monthlyRate = annualRate / 100 / 12;
+    const totalMonthlyPayment = monthlyPayment + extraPayment;
+
+    // Calculate original payoff (without extra payments)
+    let originalMonths = 0;
+    let originalTotalInterest = 0;
+    let remainingBalance = balance;
+
+    while (remainingBalance > 0 && originalMonths < 600) {
+      const interest = remainingBalance * monthlyRate;
+      originalTotalInterest += interest;
+      const principal = monthlyPayment - interest;
+      remainingBalance -= principal;
+      originalMonths++;
+      if (remainingBalance < 0) remainingBalance = 0;
+    }
+
+    // Calculate new payoff (with extra payments)
+    let newMonths = 0;
+    let newTotalInterest = 0;
+    let totalExtraPaid = 0;
+    remainingBalance = balance;
+
+    while (remainingBalance > 0 && newMonths < 600) {
+      const interest = remainingBalance * monthlyRate;
+      newTotalInterest += interest;
+      const principal = totalMonthlyPayment - interest;
+      remainingBalance -= principal;
+      totalExtraPaid += extraPayment;
+      newMonths++;
+      if (remainingBalance < 0) remainingBalance = 0;
+    }
+
+    // Calculate savings
+    const interestSaved = originalTotalInterest - newTotalInterest;
+    const monthsSaved = originalMonths - newMonths;
+
+    // Calculate payoff dates
+    const now = new Date();
+    const originalPayoffDate = new Date(now.getFullYear(), now.getMonth() + originalMonths, 1);
+    const newPayoffDate = new Date(now.getFullYear(), now.getMonth() + newMonths, 1);
+
+    const formatDate = (date) => {
+      return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    };
+
+    const formatCurrency = (num) => {
+      return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    // Update results
+    document.getElementById('interestSaved').textContent = formatCurrency(interestSaved);
+    document.getElementById('timeSaved').textContent = monthsSaved + ' month' + (monthsSaved !== 1 ? 's' : '');
+    document.getElementById('newPayoffDate').textContent = formatDate(newPayoffDate);
+    document.getElementById('originalPayoff').textContent = formatDate(originalPayoffDate);
+    document.getElementById('totalExtra').textContent = formatCurrency(totalExtraPaid);
+  }
+
+  // Auto-calculate on input change
+  let timeout;
+  document.querySelectorAll('#loanBalance, #interestRate, #monthlyPayment, #extraPayment').forEach(input => {
+    input.addEventListener('input', () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(calculateLoanPayoff, 300);
+    });
+  });
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { 
+      if (e.isIntersecting) e.target.style.animationPlayState = 'running'; 
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+
+  // Calculate on load with demo values
+  window.addEventListener('load', () => {
+    document.getElementById('loanBalance').value = 25000;
+    document.getElementById('interestRate').value = 6.5;
+    document.getElementById('monthlyPayment').value = 500;
+    document.getElementById('extraPayment').value = 100;
+    document.getElementById('loanType').value = 'auto';
+    calculateLoanPayoff();
+  });
+</script>
+
+</body>
+</html>

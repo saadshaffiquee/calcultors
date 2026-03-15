@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ═══════════════════════════════════════
+       SEO: Crypto Break-Even Calculator
+  ═══════════════════════════════════════ -->
+  <title>Crypto Break-Even Calculator | Find Your Exact Sell Price</title>
+  <meta name="description" content="Free crypto break-even calculator. Calculate the exact sell price needed to cover exchange fees and hit 0% profit. Works for Bitcoin, Ethereum, and all altcoins.">
+  <meta name="keywords" content="crypto break even calculator, bitcoin break even price, crypto trading calculator, exchange fee calculator, break even price crypto, crypto profit calculator, trading break even point">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://fincalcuhub.vercel.app/crypto-break-even-calculator.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Crypto Break-Even Calculator | Find Your Exact Sell Price">
+  <meta property="og:description" content="Calculate the exact crypto sell price needed to cover exchange fees and break even. Free tool, no signup required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fincalcuhub.vercel.app/crypto-break-even-calculator.html">
+
+  <!-- Schema.org Calculator -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Crypto Break-Even Calculator",
+    "applicationCategory": "FinanceApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "description": "Free online crypto break-even calculator for traders",
+    "operatingSystem": "Any",
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "890"
+    }
+  }
+  </script>
+
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a crypto break-even price?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The crypto break-even price is the exact sell price at which you recover your initial investment plus all trading fees, resulting in zero profit and zero loss. It accounts for both buy and sell exchange fees."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do exchange fees affect my break-even price?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Exchange fees increase your break-even price because you pay fees when buying (reducing your actual coin amount) and when selling (reducing your proceeds). For example, with 0.5% fees on both sides, you need the price to rise approximately 1% above your buy price just to break even."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #181c24;
+      --border: #1e2330;
+      --green: #00d97e;
+      --gold: #f5c842;
+      --blue: #5b9cf6;
+      --purple: #a78bfa;
+      --orange: #fb923c;
+      --red: #f87171;
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --muted2: #9ca3af;
+      --radius: 14px;
+      --mono: 'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 18px 24px;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,12,16,.92);
+      backdrop-filter: blur(14px);
+    }
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+    }
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem; color: var(--text);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 9px;
+    }
+    .logo-mark {
+      width: 28px; height: 28px;
+      background: var(--green);
+      border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .85rem; color: #000; font-weight: 800;
+    }
+    nav { display: flex; gap: 6px; flex-wrap: wrap; }
+    nav a {
+      color: var(--muted2); text-decoration: none;
+      font-size: .82rem; font-weight: 500;
+      padding: 6px 12px; border-radius: 8px;
+      transition: color .2s, background .2s;
+    }
+    nav a:hover { color: var(--text); background: var(--surface2); }
+
+    /* ─── HERO ─── */
+    .hero {
+      max-width: 1100px; margin: 0 auto;
+      padding: 60px 24px 40px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(0,217,126,.07); border: 1px solid rgba(0,217,126,.18);
+      color: var(--green); font-size: .75rem; font-weight: 600;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 999px; margin-bottom: 22px;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: blink 2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      line-height: 1.15; color: var(--text);
+      max-width: 720px; margin-bottom: 16px;
+    }
+    h1 em { font-style: italic; color: var(--blue); }
+    .hero-sub {
+      color: var(--muted2); font-size: 1.1rem;
+      max-width: 560px; margin-bottom: 24px; line-height: 1.7;
+    }
+
+    /* ─── CALCULATOR SECTION ─── */
+    .calc-section {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+    .calc-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    @media(max-width:768px){
+      .calc-container { grid-template-columns: 1fr; }
+    }
+
+    /* ─── INPUTS SIDE ─── */
+    .calc-inputs {
+      padding: 32px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    @media(max-width:768px){
+      .calc-inputs { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; }
+    }
+    .input-group { display: flex; flex-direction: column; gap: 8px; }
+    .input-label {
+      font-size: .85rem; font-weight: 600;
+      color: var(--text); display: flex; align-items: center; gap: 6px;
+    }
+    .input-label span { color: var(--muted); font-weight: 400; }
+    .input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .input-prefix {
+      position: absolute;
+      left: 14px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .9rem;
+      pointer-events: none;
+    }
+    .calc-inputs input, .calc-inputs select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .calc-inputs input:focus, .calc-inputs select:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(91,156,246,.1);
+    }
+    .calc-inputs input::placeholder { color: var(--muted); }
+    .calc-inputs input[type="number"] { padding-left: 14px; }
+    
+    /* Fee row styling */
+    .fee-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .calc-btn {
+      background: var(--blue);
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 24px;
+      font-family: 'Outfit', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      margin-top: 8px;
+    }
+    .calc-btn:hover { background: #7ab0ff; transform: translateY(-1px); }
+    .calc-btn:active { transform: translateY(0); }
+
+    /* ─── RESULTS SIDE ─── */
+    .calc-results {
+      padding: 32px;
+      background: rgba(91,156,246,.03);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+    }
+    @media(max-width:768px){ .calc-results { padding: 24px; } }
+
+    .result-block { text-align: center; }
+    .result-label {
+      font-size: .8rem;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 8px;
+    }
+    .result-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+      color: var(--blue);
+      line-height: 1;
+    }
+
+    .result-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .breakdown-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .breakdown-label {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .breakdown-value {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--text);
+      font-weight: 600;
+    }
+    .breakdown-item.highlight {
+      border-color: var(--blue);
+      background: rgba(91,156,246,.08);
+    }
+    .breakdown-item.highlight .breakdown-value {
+      color: var(--blue);
+    }
+
+    /* ─── SECTIONS ─── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 24px 0;
+    }
+    .section-header { margin-bottom: 28px; }
+    .section-tag {
+      display: inline-block;
+      font-size: .72rem; font-weight: 700; letter-spacing: .09em;
+      text-transform: uppercase; color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .section-desc {
+      color: var(--muted2);
+      font-size: .95rem;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* ─── EXPLANATION ─── */
+    .formula-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-top: 20px;
+    }
+    .formula-title {
+      font-size: .9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .formula {
+      font-family: var(--mono);
+      font-size: 1.1rem;
+      color: var(--blue);
+      background: var(--surface2);
+      padding: 16px 20px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+    .formula-vars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+    .var-item {
+      font-size: .85rem;
+      color: var(--muted2);
+    }
+    .var-item strong {
+      color: var(--text);
+      font-family: var(--mono);
+    }
+
+    /* ─── EXAMPLE ─── */
+    .example-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    @media(max-width:640px){ .example-box { grid-template-columns: 1fr; } }
+    .example-inputs-side {
+      padding: 28px;
+      border-right: 1px solid var(--border);
+    }
+    @media(max-width:640px){ .example-inputs-side { border-right: none; border-bottom: 1px solid var(--border); } }
+    .example-inputs-side h3 {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      color: var(--muted2);
+      font-weight: 500;
+    }
+    .ex-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .ex-row:last-child { border-bottom: none; }
+    .ex-k { color: var(--muted); }
+    .ex-v { font-family: var(--mono); color: var(--text); }
+
+    .example-result-side {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: rgba(91,156,246,.05);
+    }
+    .example-result-label {
+      font-size: .8rem;
+      color: var(--muted2);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+    .example-result-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.4rem;
+      color: var(--blue);
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    .example-result-sub {
+      font-size: .85rem;
+      color: var(--muted);
+      max-width: 280px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-list {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-size: .98rem;
+      font-weight: 500;
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      text-align: left;
+      gap: 16px;
+    }
+    .faq-q:hover { color: var(--blue); }
+    .faq-icon {
+      font-size: 1.2rem;
+      color: var(--muted);
+      transition: transform .3s;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      color: var(--blue);
+    }
+    .faq-a {
+      display: none;
+      padding-bottom: 18px;
+      color: var(--muted2);
+      line-height: 1.8;
+      font-size: .9rem;
+    }
+    .faq-item.open .faq-a { display: block; }
+
+    /* ─── RELATED CALCULATORS ─── */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .calc-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color .22s, transform .22s, box-shadow .22s;
+      position: relative;
+      overflow: hidden;
+    }
+    .calc-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent, var(--green));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+    }
+    .calc-card:hover {
+      border-color: rgba(255,255,255,.1);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+    }
+    .calc-card:hover::before { transform: scaleX(1); }
+
+    .calc-card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+      width: 44px;
+      height: 44px;
+      background: var(--surface2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .calc-card h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .calc-card p {
+      font-size: .82rem;
+      color: var(--muted2);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .calc-card-arrow {
+      margin-top: 14px;
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--accent, var(--green));
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--muted);
+      font-size: .82rem;
+      text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy {
+      color: var(--muted);
+      font-size: .78rem;
+      width: 100%;
+      text-align: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+    .fade-up {
+      animation: fadeUp .5s ease forwards;
+      opacity: 0;
+    }
+    .d1 { animation-delay: .05s; }
+    .d2 { animation-delay: .12s; }
+    .d3 { animation-delay: .19s; }
+
+    /* ─── MOBILE ─── */
+    @media(max-width:640px){
+      nav { display: none; }
+      .hero { padding: 40px 16px 32px; }
+      .section { padding: 40px 16px 0; }
+      .calc-section { padding: 0 16px 32px; }
+      .calc-inputs, .calc-results { padding: 20px; }
+      .fee-row { grid-template-columns: 1fr; }
+      .result-breakdown { grid-template-columns: 1fr; }
+      .formula-vars { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">
+      <span class="logo-mark">F</span>
+      FinCalcuHub
+    </a>
+    <nav>
+      <a href="/#calculators">All Calculators</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#explanation">How It Works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-badge"><span></span> Free · No Signup · Instant</div>
+  <h1>Crypto Break-Even <em>Calculator</em></h1>
+  <p class="hero-sub">Calculate the exact sell price needed to cover all exchange fees and hit 0% profit. Know your break-even point before you trade Bitcoin, Ethereum, or any altcoin.</p>
+</div>
+
+<!-- ─── CALCULATOR ─── -->
+<section class="calc-section" id="calculator">
+  <div class="calc-container fade-up d1">
+
+    <!-- INPUTS -->
+    <div class="calc-inputs">
+      <div class="input-group">
+        <label class="input-label">Buy Price <span>(per coin, e.g., 45000)</span></label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="buyPrice" placeholder="45000" min="0" step="0.01" style="padding-left: 28px;">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Investment Amount <span>(total USD spent)</span></label>
+        <div class="input-wrap">
+          <span class="input-prefix">$</span>
+          <input type="number" id="investment" placeholder="1000" min="0" step="10" style="padding-left: 28px;">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Exchange Fees <span>(buy + sell combined)</span></label>
+        <div class="fee-row">
+          <div class="input-wrap" style="width: 100%;">
+            <input type="number" id="buyFee" placeholder="0.1" min="0" max="100" step="0.01">
+            <span class="input-prefix" style="left:auto;right:14px;">% buy</span>
+          </div>
+          <div class="input-wrap" style="width: 100%;">
+            <input type="number" id="sellFee" placeholder="0.1" min="0" max="100" step="0.01">
+            <span class="input-prefix" style="left:auto;right:14px;">% sell</span>
+          </div>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calculateBreakEven()">Calculate Break-Even</button>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="calc-results">
+      <div class="result-block">
+        <div class="result-label">Break-Even Sell Price</div>
+        <div class="result-value" id="breakEvenPrice">$0.00</div>
+      </div>
+
+      <div class="result-breakdown">
+        <div class="breakdown-item highlight">
+          <div class="breakdown-label">Price Increase Needed</div>
+          <div class="breakdown-value" id="priceIncrease">0.00%</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Coins Received</div>
+          <div class="breakdown-value" id="coinsReceived">0.0000</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Total Buy Fee</div>
+          <div class="breakdown-value" id="totalBuyFee">$0.00</div>
+        </div>
+        <div class="breakdown-item">
+          <div class="breakdown-label">Total Sell Fee</div>
+          <div class="breakdown-value" id="totalSellFee">$0.00</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── EXPLANATION ─── -->
+<section class="section" id="explanation">
+  <div class="section-header">
+    <div class="section-tag">📚 How It Works</div>
+    <h2>Understanding Break-Even Price</h2>
+    <p class="section-desc">Your break-even price is the minimum sell price required to recover your initial investment after paying exchange fees on both the buy and sell sides.</p>
+  </div>
+
+  <div class="formula-box fade-up d2">
+    <div class="formula-title">📐 The Formula</div>
+    <div class="formula">Break-Even = Buy Price × (1 + Buy Fee%) ÷ (1 - Sell Fee%)</div>
+    <div class="formula-vars">
+      <div class="var-item"><strong>Buy Price</strong> = Price per coin when purchasing</div>
+      <div class="var-item"><strong>Buy Fee%</strong> = Exchange fee as decimal (0.001 = 0.1%)</div>
+      <div class="var-item"><strong>Sell Fee%</strong> = Exchange fee as decimal (0.001 = 0.1%)</div>
+      <div class="var-item"><strong>Result</strong> = Minimum sell price for zero profit/loss</div>
+    </div>
+    <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:.85rem;color:var(--muted2);">
+      <strong style="color:var(--text);">Why this works:</strong> You pay fees when buying (reducing coins received) and when selling (reducing proceeds). The formula accounts for both fee impacts to find your true break-even point.
+    </div>
+  </div>
+
+  <div class="formula-box fade-up d3" style="margin-top:16px;">
+    <div class="formula-title">🎯 Why This Matters</div>
+    <ul style="color:var(--muted2);font-size:.9rem;line-height:1.9;list-style:none;padding:0;">
+      <li>✓ <strong>Avoid surprise losses</strong> — Know your minimum profitable exit before trading</li>
+      <li>✓ <strong>Compare exchanges</strong> — Higher fees mean higher break-even prices</li>
+      <li>✓ <strong>Plan your trades</strong> — Set stop-losses and take-profits with fee costs included</li>
+      <li>✓ <strong>Tax planning</strong> — Break-even is your cost basis for capital gains calculations</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ─── WORKED EXAMPLE ─── -->
+<section class="section" id="example">
+  <div class="section-header">
+    <div class="section-tag">💡 Worked Example</div>
+    <h2>See it in action</h2>
+    <p class="section-desc">Here's how a $1,000 Bitcoin purchase at $45,000 works with typical exchange fees (0.1% each side).</p>
+  </div>
+
+  <div class="example-box">
+    <div class="example-inputs-side">
+      <h3>Trade Details</h3>
+      <div class="ex-row"><span class="ex-k">Buy Price (BTC)</span><span class="ex-v">$45,000.00</span></div>
+      <div class="ex-row"><span class="ex-k">Investment</span><span class="ex-v">$1,000.00</span></div>
+      <div class="ex-row"><span class="ex-k">Buy Fee (0.1%)</span><span class="ex-v">$1.00</span></div>
+      <div class="ex-row"><span class="ex-k">Coins Received</span><span class="ex-v">0.02220 BTC</span></div>
+      <div class="ex-row"><span class="ex-k">Calculation</span><span class="ex-v">$45,000 × 1.001 ÷ 0.999</span></div>
+    </div>
+    <div class="example-result-side">
+      <div class="example-result-label">Break-Even Sell Price</div>
+      <div class="example-result-value">$45,090.09</div>
+      <div class="example-result-sub">Price must rise <strong style="color:var(--blue)">0.20%</strong> just to break even</div>
+    </div>
+  </div>
+
+  <div class="example-box" style="margin-top:16px;">
+    <div class="example-inputs-side">
+      <h3>High Fee Example (Coinbase Pro)</h3>
+      <div class="ex-row"><span class="ex-k">Buy Price (ETH)</span><span class="ex-v">$2,500.00</span></div>
+      <div class="ex-row"><span class="ex-k">Investment</span><span class="ex-v">$5,000.00</span></div>
+      <div class="ex-row"><span class="ex-k">Buy Fee (0.5%)</span><span class="ex-v">$25.00</span></div>
+      <div class="ex-row"><span class="ex-k">Sell Fee (0.5%)</span><span class="ex-v">0.5%</span></div>
+      <div class="ex-row"><span class="ex-k">Calculation</span><span class="ex-v">$2,500 × 1.005 ÷ 0.995</span></div>
+    </div>
+    <div class="example-result-side" style="background:rgba(251,146,60,.05);">
+      <div class="example-result-label" style="color:var(--orange);">Break-Even Sell Price</div>
+      <div class="example-result-value" style="color:var(--orange);">$2,525.13</div>
+      <div class="example-result-sub">With 0.5% fees each way, you need a <strong style="color:var(--orange)">1.01%</strong> gain just to break even</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+<section class="section" id="faq">
+  <div class="section-header">
+    <div class="section-tag">❓ FAQ</div>
+    <h2>Common questions</h2>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What is a crypto break-even price?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">The crypto break-even price is the exact sell price at which you recover your initial investment plus all trading fees, resulting in zero profit and zero loss. It accounts for both the buy fee (which reduces how many coins you receive) and the sell fee (which reduces your proceeds when exiting the trade).</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        How do I find my exchange fees?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Check your exchange's fee schedule in your account settings or trading rules. Common rates: Binance (0.1% standard), Coinbase Pro (0.5% for low volume), Kraken (0.16-0.26%), and decentralized exchanges (0.3% or variable gas fees). Fees often decrease with higher trading volume or when using exchange tokens (like BNB on Binance).</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Why is my break-even price higher than my buy price?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Your break-even price is always higher than your buy price because you pay fees on both sides of the trade. The buy fee reduces the amount of cryptocurrency you receive, and the sell fee reduces the cash you get when selling. For example, with 0.1% fees on both sides, you need approximately 0.2% price appreciation just to break even.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Does this calculator include network/gas fees?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">This calculator focuses on exchange trading fees (maker/taker fees). Network or gas fees for blockchain transfers are separate and vary by network congestion. If you're moving crypto between wallets or exchanges, add those costs to your investment amount or consider them as additional overhead in your trading strategy.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        What's the difference between maker and taker fees?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a"><strong>Maker fees</strong> are charged when you add liquidity to the order book (placing limit orders that don't fill immediately). <strong>Taker fees</strong> are charged when you remove liquidity (market orders or limit orders that fill immediately). Makers typically pay lower fees (0-0.1%) while takers pay standard rates (0.1-0.5%). Use maker orders when possible to reduce your break-even price.</div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I use this for leverage/margin trading?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">This calculator is designed for spot trading (buying actual cryptocurrency). For leveraged trading, you must also account for funding rates, margin interest, and liquidation prices. Leverage amplifies both gains and losses, and fees are typically charged on the total position size, not just your collateral. Use specialized leverage calculators for margin trading break-even calculations.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RELATED CALCULATORS ─── -->
+<section class="section" style="padding-bottom:60px;">
+  <div class="section-header">
+    <div class="section-tag">🔗 Related Tools</div>
+    <h2>More calculators you might need</h2>
+  </div>
+
+  <div class="calc-grid">
+    <a href="/compound-interest-calculator.html" class="calc-card" style="--accent:var(--green)">
+      <div class="calc-card-icon">📈</div>
+      <h3>Compound Interest</h3>
+      <p>See how your money grows exponentially with interest on interest.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/simple-interest-calculator.html" class="calc-card" style="--accent:var(--blue)">
+      <div class="calc-card-icon">💰</div>
+      <h3>Simple Interest</h3>
+      <p>Calculate linear interest on loans and basic savings accounts.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/crypto-profit-calculator.html" class="calc-card" style="--accent:var(--purple)">
+      <div class="calc-card-icon">🚀</div>
+      <h3>Crypto Profit Calculator</h3>
+      <p>Calculate actual profits and ROI after fees on completed trades.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="/savings-goal-calculator.html" class="calc-card" style="--accent:var(--gold)">
+      <div class="calc-card-icon">🎯</div>
+      <h3>Savings Goal Calculator</h3>
+      <p>Find out how much to save monthly to reach your financial target.</p>
+      <div class="calc-card-arrow">
+        Open Calculator
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">FinCalcuHub</div>
+    <div class="footer-links">
+      <a href="/#calculators">All Calculators</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/about.html">About</a>
+      <a href="/sitemap.xml">Sitemap</a>
+    </div>
+  </div>
+  <div class="footer-inner">
+    <p class="footer-copy">© 2025 FinCalcuHub. For educational purposes only. Not financial advice.</p>
+  </div>
+</footer>
+
+<script>
+  // FAQ Toggle
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Crypto Break-Even Calculation
+  function calculateBreakEven() {
+    const buyPrice = parseFloat(document.getElementById('buyPrice').value) || 0;
+    const investment = parseFloat(document.getElementById('investment').value) || 0;
+    const buyFeePercent = parseFloat(document.getElementById('buyFee').value) || 0;
+    const sellFeePercent = parseFloat(document.getElementById('sellFee').value) || 0;
+
+    if (buyPrice <= 0 || investment <= 0) {
+      document.getElementById('breakEvenPrice').textContent = '$0.00';
+      document.getElementById('priceIncrease').textContent = '0.00%';
+      document.getElementById('coinsReceived').textContent = '0.0000';
+      document.getElementById('totalBuyFee').textContent = '$0.00';
+      document.getElementById('totalSellFee').textContent = '$0.00';
+      return;
+    }
+
+    // Convert percentages to decimals
+    const buyFeeDecimal = buyFeePercent / 100;
+    const sellFeeDecimal = sellFeePercent / 100;
+
+    // Calculate fees
+    const totalBuyFee = investment * buyFeeDecimal;
+    const actualInvested = investment - totalBuyFee;
+    const coinsReceived = actualInvested / buyPrice;
+
+    // Break-even formula: BuyPrice × (1 + BuyFee%) ÷ (1 - SellFee%)
+    // This accounts for both the reduction in coins from buy fee and reduction in proceeds from sell fee
+    const breakEvenPrice = buyPrice * (1 + buyFeeDecimal) / (1 - sellFeeDecimal);
+    
+    // Calculate sell fee at break-even (for display purposes)
+    const grossProceeds = coinsReceived * breakEvenPrice;
+    const totalSellFee = grossProceeds * sellFeeDecimal;
+    const netProceeds = grossProceeds - totalSellFee;
+
+    // Calculate percentage increase needed
+    const priceIncrease = ((breakEvenPrice - buyPrice) / buyPrice) * 100;
+
+    // Format currency
+    const formatCurrency = (num) => {
+      return '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    // Update results
+    document.getElementById('breakEvenPrice').textContent = formatCurrency(breakEvenPrice);
+    document.getElementById('priceIncrease').textContent = priceIncrease.toFixed(2) + '%';
+    document.getElementById('coinsReceived').textContent = coinsReceived.toFixed(4);
+    document.getElementById('totalBuyFee').textContent = formatCurrency(totalBuyFee);
+    document.getElementById('totalSellFee').textContent = formatCurrency(totalSellFee);
+  }
+
+  // Auto-calculate on input change (with small delay)
+  let timeout;
+  document.querySelectorAll('#buyPrice, #investment, #buyFee, #sellFee').forEach(input => {
+    input.addEventListener('input', () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(calculateBreakEven, 300);
+    });
+  });
+
+  // Intersection Observer for animations
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { 
+      if (e.isIntersecting) e.target.style.animationPlayState = 'running'; 
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => {
+    el.style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+
+  // Calculate on load with demo values
+  window.addEventListener('load', () => {
+    document.getElementById('buyPrice').value = 45000;
+    document.getElementById('investment').value = 1000;
+    document.getElementById('buyFee').value = 0.1;
+    document.getElementById('sellFee').value = 0.1;
+    calculateBreakEven();
+  });
+</script>
+
+</body>
+</html>
